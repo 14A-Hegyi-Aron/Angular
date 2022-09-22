@@ -4,21 +4,11 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './components/app.component';
-import { CarListComponent } from './components/car-list/car-list.component';
-
+import { AppComponent, CarListComponent, HomeComponent } from './components';
 @NgModule({
-  declarations: [
-    AppComponent,
-    CarListComponent
-  ],
-  imports: [
-    BrowserModule,
-    FormsModule,
-    HttpClientModule,
-    AppRoutingModule
-  ],
+  declarations: [AppComponent, CarListComponent, HomeComponent],
+  imports: [BrowserModule, FormsModule, HttpClientModule, AppRoutingModule],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
