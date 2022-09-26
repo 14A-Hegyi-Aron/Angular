@@ -1,14 +1,17 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { CarListComponent, HomeComponent } from './components';
+import { 
+  CarListComponent, 
+  HomeComponent 
+} from './components';
 
 const routes: Routes = [
-  { path: '', component: HomeComponent },
-  { path: 'car-list', component: CarListComponent },
+  {path: '', component: HomeComponent },
+  {path: 'car-list', component: CarListComponent },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule],
+  exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

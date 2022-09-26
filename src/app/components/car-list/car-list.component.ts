@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { CarModel } from '../../models/';
+import { CarModel } from '../../models';
+import { CarService } from '../../services';
 
 @Component({
   selector: 'app-car-list',
@@ -7,22 +8,42 @@ import { CarModel } from '../../models/';
   styleUrls: ['./car-list.component.css'],
 })
 export class CarListComponent implements OnInit {
-  cars: CarModel[] = [
-    {
-      licensePlate: 'AA-AA-001',
-      model: 'Ford Focus',
-      pricePerDay: 39900,
-      date: '2022-06-10',
-    },
-    {
-      licensePlate: 'AA-AA-002',
-      model: 'Ford Mondeo',
-      pricePerDay: 49900,
-      date: '2022-06-10',
-    },
-  ];
+  cars: CarModel[] = [];
+  newCarData: CarModel | null = null;
 
-  constructor() {}
+  constructor(private carService: CarService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.carService.getCars().subscribe({
+      next: (result) => {
+        this.cars = result;
+      },
+      error: (err) => {
+        console.error(err);
+      },
+    });
+  }
+  newCar() {
+    this.newCarData = {
+      licensePlate: 'AA-AA-000',
+      model: '',
+      pricePerDay: 0,
+      date: new Date().toISOString().split('T')[0],
+    };
+  }
+  newCarSave() {
+    if (!this.newCarData) {
+      return;
+    }
+
+    this.carService.newCar(this.newCarData).subscribe({
+      next: (result) => {
+        this.newCarData = null;
+        this.cars.push(result);
+      },
+      error: (err) => {
+        console.error(err);
+      },
+    });
+  }
 }

@@ -1,0 +1,81 @@
+<span *ngFor="let car of cars; let i = index">
+  {{ i + 1 }}: {{ car.model }},
+</span>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">
+        <!-- Remove button -->
+        <!-- <button *ngIf="!newCarData" class="btn btn-sm btn-success" (click)="newCar()">+</button> -->
+        <!-- Disable button -->
+        <button
+          class="btn btn-sm btn-success"
+          (click)="newCar()"
+          [disabled]="newCarData"
+        >
+          +
+        </button>
+      </th>
+      <th scope="col">Rendszám</th>
+      <th scope="col">Modell</th>
+      <th scope="col">Napi ár</th>
+      <th scope="col">Dátum</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngIf="newCarData">
+      <td>
+        <button class="btn btn-sm btn-success me-2" (click)="newCarSave()">
+          ✔
+        </button>
+        <button class="btn btn-sm btn-danger" (click)="newCarData = null">
+          ❌
+        </button>
+      </td>
+      <td>
+        <input
+          title="Rendszám"
+          placeholder="Rendszám"
+          type="text"
+          class="form-control"
+          [(ngModel)]="newCarData.licensePlate"
+        />
+      </td>
+      <td>
+        <input
+          title="Modell"
+          placeholder="Modell"
+          type="text"
+          class="form-control"
+          [(ngModel)]="newCarData.model"
+        />
+      </td>
+      <td>
+        <input
+          title="Napi ár"
+          placeholder="Napi ár"
+          type="number"
+          class="form-control"
+          [(ngModel)]="newCarData.pricePerDay"
+        />
+      </td>
+      <td>
+        <input
+          title="Dátum"
+          placeholder="Dátum"
+          type="date"
+          class="form-control"
+          [(ngModel)]="newCarData.date"
+        />
+      </td>
+    </tr>
+    <tr *ngFor="let car of cars; let i = index">
+      <th scope="row">{{ i + 1 }}</th>
+      <td>{{ car.licensePlate }}</td>
+      <td>{{ car.model }}</td>
+      <td>{{ car.pricePerDay }}</td>
+      <td>{{ car.date }}</td>
+    </tr>
+  </tbody>
+</table>
