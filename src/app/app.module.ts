@@ -9,12 +9,14 @@ import {
   CarListComponent,
   HomeComponent 
 } from './components';
+import { First10CharWithPointPipe } from './pipes/first10-char-with-point.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     CarListComponent,
-    HomeComponent
+    HomeComponent,
+    First10CharWithPointPipe
   ],
   imports: [
     BrowserModule,

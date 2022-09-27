@@ -40,6 +40,8 @@
           type="text"
           class="form-control"
           [(ngModel)]="newCarData.licensePlate"
+          [ngClass]="errors.licensePlate ? 'border border-danger border-3' : ''"
+          (keyup)="errors.licensePlate = false"
         />
       </td>
       <td>
@@ -49,6 +51,8 @@
           type="text"
           class="form-control"
           [(ngModel)]="newCarData.model"
+          [ngClass]="errors.model ? 'border border-danger border-3' : ''"
+          (keyup)="errors.model = false"
         />
       </td>
       <td>
@@ -58,6 +62,8 @@
           type="number"
           class="form-control"
           [(ngModel)]="newCarData.pricePerDay"
+          [ngClass]="errors.pricePerDay ? 'border border-danger border-3' : ''"
+          (keyup)="errors.pricePerDay = false"
         />
       </td>
       <td>
@@ -67,15 +73,52 @@
           type="date"
           class="form-control"
           [(ngModel)]="newCarData.date"
+          [ngClass]="errors.date ? 'border border-danger border-3' : ''"
+          (keyup)="errors.date = false"
         />
       </td>
     </tr>
     <tr *ngFor="let car of cars; let i = index">
-      <th scope="row">{{ i + 1 }}</th>
+      <th scope="row">
+        <button
+          class="btn btn-outline-warning btn-sm me-2 p-1"
+          [disabled]="newCarData"
+        >
+          ✎
+        </button>
+        <button class="btn btn-outline-danger btn-sm" [disabled]="newCarData">
+          ✘
+        </button>
+      </th>
       <td>{{ car.licensePlate }}</td>
       <td>{{ car.model }}</td>
       <td>{{ car.pricePerDay }}</td>
-      <td>{{ car.date }}</td>
+      <!-- <td>{{ car.date | date: 'yyyy.MM.dd' }}</td> -->
+      <td>{{ car.date | first10CharWithPoint }}</td>
     </tr>
   </tbody>
 </table>
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#deleteConfirmModal">
+  Launch demo modal
+</button>
+
+<!-- Modal -->
+<div *ngIf="false" class="modal fade show d-block" id="deleteConfirmModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteConfirmModalLabel">Modal title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        ( ´･･)ﾉ(._.`)
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>

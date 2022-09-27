@@ -10,6 +10,12 @@ import { CarService } from '../../services';
 export class CarListComponent implements OnInit {
   cars: CarModel[] = [];
   newCarData: CarModel | null = null;
+  errors = {
+    licensePlate: false,
+    model: false,
+    pricePerDay: false,
+    date: false,
+  };
 
   constructor(private carService: CarService) {}
 
@@ -30,16 +36,39 @@ export class CarListComponent implements OnInit {
       pricePerDay: 0,
       date: new Date().toISOString().split('T')[0],
     };
+
+    this.errors = {
+      licensePlate: false,
+      model: false,
+      pricePerDay: false,
+      date: false,
+    };
   }
   newCarSave() {
     if (!this.newCarData) {
       return;
     }
 
+    this.errors.licensePlate = !this.newCarData.licensePlate;
+    this.errors.model = !this.newCarData.model;
+    this.errors.pricePerDay = !this.newCarData.pricePerDay || this.newCarData.pricePerDay <= 0;
+    this.errors.date = !this.newCarData.date;
+
+    if (
+      !this.errors.licensePlate ||
+      this.errors.model ||
+      this.errors.pricePerDay ||
+      this.errors.date
+    ) {
+      return;
+    }
+
     this.carService.newCar(this.newCarData).subscribe({
       next: (result) => {
+        if (this.newCarData) {
+          this.cars.push(this.newCarData);
+        }
         this.newCarData = null;
-        this.cars.push(result);
       },
       error: (err) => {
         console.error(err);
