@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CarModel } from '../models';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -17,6 +17,21 @@ export class CarService {
   newCar(car: CarModel): Observable<CarModel> {
     return this.http.post<CarModel>('http://c103-20/api/car', car);
   }
+
+  deleteCar(car: CarModel): Observable<any> {
+    var options = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+      body: car,
+    };
+    return this.http.delete<any>('http://c103-20/api/car/', options);
+  }
+
+  editCar(car: CarModel): Observable<CarModel> {
+    return this.http.put<CarModel>('http://c103-20/api/car', car);
+  }
+
   // getCars(): CarModel[] {
     // return [
     //   {

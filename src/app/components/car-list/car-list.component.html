@@ -12,7 +12,7 @@
         <button
           class="btn btn-sm btn-success"
           (click)="newCar()"
-          [disabled]="newCarData"
+          [disabled]="newCarData || carToEdit"
         >
           +
         </button>
@@ -82,11 +82,16 @@
       <th scope="row">
         <button
           class="btn btn-outline-warning btn-sm me-2 p-1"
-          [disabled]="newCarData"
+          [disabled]="newCarData || carToEdit"
+          (click)="editCarRequest(car)"
         >
           ✎
         </button>
-        <button class="btn btn-outline-danger btn-sm" [disabled]="newCarData">
+        <button
+          class="btn btn-outline-danger btn-sm"
+          [disabled]="newCarData || carToEdit"
+          (click)="deleteCarRequest(car)"
+        >
           ✘
         </button>
       </th>
@@ -99,26 +104,57 @@
   </tbody>
 </table>
 
-<!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#deleteConfirmModal">
-  Launch demo modal
-</button>
-
-<!-- Modal -->
-<div *ngIf="false" class="modal fade show d-block" id="deleteConfirmModal" tabindex="-1">
+<div
+  *ngIf="carToDelete"
+  class="modal fade show d-block"
+  id="deleteConfirmModal"
+  tabindex="-1"
+>
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="deleteConfirmModalLabel">Modal title</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        <h5 class="modal-title" id="deleteConfirmModalLabel">Megerősítés</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          (click)="carToDelete = null"
+        ></button>
       </div>
       <div class="modal-body">
-        ( ´･･)ﾉ(._.`)
+        ( ´･･)ﾉ(._.`) <br />
+        Biztosan szeretnéd törölni a {{ carToDelete.licensePlate }} rendszámú
+        autót a nyilvántartásból?
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-bs-dismiss="modal"
+          (click)="carToDelete = null"
+        >
+          Mégsem
+        </button>
+        <button type="button" class="btn btn-danger" (click)="deleteCar()">
+          Törlés
+        </button>
       </div>
     </div>
   </div>
+</div>
+
+<div
+  *ngIf="errorText"
+  class="alert alert-danger d-flex align-items-center w-50 float-end"
+  role="alert"
+>
+  <div class="mx-auto">
+    <p class="text-start m-0">⁉ {{ errorText }}</p>
+  </div>
+  <button
+    type="button"
+    class="btn-close float-end"
+    data-bs-dismiss="modal"
+    (click)="(errorText)"
+  ></button>
 </div>
