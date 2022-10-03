@@ -11,7 +11,6 @@ const routes: Routes = [
   {path: 'car-list', component: CarListComponent },
   {path: 'car-list2', component: CarList2Component },
 ];
-
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]

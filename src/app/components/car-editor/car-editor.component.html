@@ -1,0 +1,74 @@
+<div *ngIf="model" class="modal fade show d-block" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-primary">
+        <h5 class="modal-title">Autó adatai</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          (click)="cancel()"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div>
+          <label> Rendszám: </label>
+          <span *ngIf="!isnew">{{ model.licensePlate }}</span>
+          <input
+            *ngIf="isnew"
+            type="text"
+            class="form-control"
+            [(ngModel)]="model.licensePlate"
+          />
+        </div>
+        <div>
+          <label>
+            Modell:
+            <input
+              type="text"
+              [(ngModel)]="model.model"
+              class="form-control"
+              placeholder="Modell"
+            />
+          </label>
+        </div>
+        <div>
+          <label>
+            Napi ár:
+            <input
+              type="text"
+              [(ngModel)]="model.pricePerDay"
+              class="form-control"
+              placeholder="Napi ár"
+            />
+          </label>
+        </div>
+        <div>
+          <label>
+            Dátum:
+            <input
+              type="date"
+              [(ngModel)]="model.date"
+              class="form-control"
+              placeholder="Dátum"
+            />
+          </label>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-bs-dismiss="modal"
+          (click)="cancel()"
+        >
+          Mégsem
+        </button>
+        <button type="button" class="btn btn-success" (click)="save()">
+          Mentés
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -62,7 +62,8 @@ export class CarList2Component implements OnInit {
     }
   }
 
-  newCarSave() {
+  newCarSave(newCarData: CarModel | null) {
+    this.newCarData = newCarData;
     if (!this.newCarData) {
       return;
     }
@@ -138,7 +139,9 @@ export class CarList2Component implements OnInit {
     }
   }
 
-  modifyCar(car: CarModel) {
+  modifyCar(carToModify: CarModel | null) {
+    this.carToModify = carToModify;
+
     if (!this.carToModify) {
       return;
     }

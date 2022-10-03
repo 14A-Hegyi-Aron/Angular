@@ -12,6 +12,7 @@ import {
 import { First10CharWithPointPipe } from './pipes/first10-char-with-point.pipe';
 import { ConfirmComponent } from './components/confirm/confirm.component';
 import { CarList2Component } from './components/car-list2/car-list2.component';
+import { CarEditorComponent } from './components/car-editor/car-editor.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { CarList2Component } from './components/car-list2/car-list2.component';
     HomeComponent,
     First10CharWithPointPipe,
     ConfirmComponent,
-    CarList2Component
+    CarList2Component,
+    CarEditorComponent
   ],
   imports: [
     BrowserModule,
