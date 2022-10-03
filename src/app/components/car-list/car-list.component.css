@@ -1,0 +1,10 @@
+.alert {
+    width: 50%;
+    position: fixed;
+    bottom: 0;
+    left: 50%
+}
+
+.alert .btn-close {
+    float: right;
+}

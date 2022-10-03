@@ -1,18 +1,20 @@
-<span *ngFor="let car of cars; let i = index">
-  {{ i + 1 }}: {{ car.model }},
-</span>
+<!-- 
+<p *ngFor="let car of cars; let i = index">
+    {{i + 1}}: {{car.model}}
+</p>
+ -->
 
 <table class="table">
   <thead>
     <tr>
       <th scope="col">
-        <!-- Remove button -->
-        <!-- <button *ngIf="!newCarData" class="btn btn-sm btn-success" (click)="newCar()">+</button> -->
-        <!-- Disable button -->
+        <!-- Eltüntetés
+                <button *ngIf="!newCarData" class="btn btn-sm btn-success" (click)="newCar()">+</button> 
+            -->
         <button
           class="btn btn-sm btn-success"
           (click)="newCar()"
-          [disabled]="newCarData || carToEdit"
+          [disabled]="newCarData || carToModify"
         >
           +
         </button>
@@ -35,126 +37,131 @@
       </td>
       <td>
         <input
-          title="Rendszám"
-          placeholder="Rendszám"
-          type="text"
           class="form-control"
-          [(ngModel)]="newCarData.licensePlate"
-          [ngClass]="errors.licensePlate ? 'border border-danger border-3' : ''"
+          type="text"
+          [ngClass]="errors.licensePlate ? 'border border-danger border-2' : ''"
+          [value]="newCarData.licensePlate"
+          (change)="changeLicensePlate($event)"
           (keyup)="errors.licensePlate = false"
         />
       </td>
       <td>
         <input
-          title="Modell"
-          placeholder="Modell"
-          type="text"
           class="form-control"
+          type="text"
           [(ngModel)]="newCarData.model"
-          [ngClass]="errors.model ? 'border border-danger border-3' : ''"
+          [ngClass]="errors.model ? 'border border-danger border-2' : ''"
           (keyup)="errors.model = false"
         />
       </td>
       <td>
         <input
-          title="Napi ár"
-          placeholder="Napi ár"
-          type="number"
           class="form-control"
+          type="number"
           [(ngModel)]="newCarData.pricePerDay"
-          [ngClass]="errors.pricePerDay ? 'border border-danger border-3' : ''"
-          (keyup)="errors.pricePerDay = false"
+          [ngClass]="errors.price ? 'border border-danger border-2' : ''"
+          (keyup)="errors.price = false"
         />
       </td>
       <td>
         <input
-          title="Dátum"
-          placeholder="Dátum"
-          type="date"
           class="form-control"
+          type="date"
           [(ngModel)]="newCarData.date"
-          [ngClass]="errors.date ? 'border border-danger border-3' : ''"
+          [ngClass]="errors.date ? 'border border-danger border-2' : ''"
           (keyup)="errors.date = false"
         />
       </td>
     </tr>
+
     <tr *ngFor="let car of cars; let i = index">
-      <th scope="row">
+      <th *ngIf="car != carToModify" scope="row">
         <button
-          class="btn btn-outline-warning btn-sm me-2 p-1"
-          [disabled]="newCarData || carToEdit"
-          (click)="editCarRequest(car)"
+          class="btn btn-outline-warning btn-sm p-1 me-2"
+          [disabled]="newCarData || carToModify"
+          (click)="modifyCarRequest(car)"
         >
-          ✎
+          ✏
         </button>
         <button
-          class="btn btn-outline-danger btn-sm"
-          [disabled]="newCarData || carToEdit"
+          class="btn btn-outline-danger btn-sm p-1"
+          [disabled]="newCarData || carToModify"
           (click)="deleteCarRequest(car)"
         >
-          ✘
+          ❌
         </button>
       </th>
-      <td>{{ car.licensePlate }}</td>
-      <td>{{ car.model }}</td>
-      <td>{{ car.pricePerDay }}</td>
-      <!-- <td>{{ car.date | date: 'yyyy.MM.dd' }}</td> -->
-      <td>{{ car.date | first10CharWithPoint }}</td>
+      <td *ngIf="car.licensePlate != carToModify?.licensePlate">
+        {{ car.licensePlate }}
+      </td>
+      <td *ngIf="car.licensePlate != carToModify?.licensePlate">
+        {{ car.model }}
+      </td>
+      <td *ngIf="car.licensePlate != carToModify?.licensePlate">
+        {{ car.pricePerDay }}
+      </td>
+      <td *ngIf="car.licensePlate != carToModify?.licensePlate">
+        {{ car.date | first10CharWithPoint }}
+      </td>
+
+      <td *ngIf="carToModify && car.licensePlate == carToModify?.licensePlate">
+        <button class="btn btn-sm btn-success me-2" (click)="modifyCar(car)">
+          ✔
+        </button>
+        <button class="btn btn-sm btn-danger" (click)="carToModify = null">
+          ❌
+        </button>
+      </td>
+      <td *ngIf="carToModify && car.licensePlate == carToModify?.licensePlate">
+        {{ carToModify.licensePlate }}
+      </td>
+      <td *ngIf="carToModify && car.licensePlate == carToModify?.licensePlate">
+        <input
+          class="form-control"
+          type="text"
+          [(ngModel)]="carToModify.model"
+          [ngClass]="errors.model ? 'border border-danger border-2' : ''"
+          (keyup)="errors.model = false"
+        />
+      </td>
+      <td *ngIf="carToModify && car.licensePlate == carToModify?.licensePlate">
+        <input
+          class="form-control"
+          type="number"
+          [(ngModel)]="carToModify.pricePerDay"
+          [ngClass]="errors.price ? 'border border-danger border-2' : ''"
+          (keyup)="errors.price = false"
+        />
+      </td>
+      <td *ngIf="carToModify && car.licensePlate == carToModify?.licensePlate">
+        <input
+          class="form-control"
+          type="date"
+          [(ngModel)]="carToModify.date"
+          [ngClass]="errors.date ? 'border border-danger border-2' : ''"
+          (keyup)="errors.date = false"
+        />
+      </td>
     </tr>
   </tbody>
 </table>
 
-<div
+<app-confirm
   *ngIf="carToDelete"
-  class="modal fade show d-block"
-  id="deleteConfirmModal"
-  tabindex="-1"
+  (canceled)="carToDelete = null"
+  (confirmed)="deleteCar()"
 >
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="deleteConfirmModalLabel">Megerősítés</h5>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-          (click)="carToDelete = null"
-        ></button>
-      </div>
-      <div class="modal-body">
-        ( ´･･)ﾉ(._.`) <br />
-        Biztosan szeretnéd törölni a {{ carToDelete.licensePlate }} rendszámú
-        autót a nyilvántartásból?
-      </div>
-      <div class="modal-footer">
-        <button
-          type="button"
-          class="btn btn-secondary"
-          data-bs-dismiss="modal"
-          (click)="carToDelete = null"
-        >
-          Mégsem
-        </button>
-        <button type="button" class="btn btn-danger" (click)="deleteCar()">
-          Törlés
-        </button>
-      </div>
-    </div>
-  </div>
-</div>
+  Biztosan törölni szeretné a <b>{{ carToDelete.licensePlate }}</b
+  >rendszámú autót a nyilvántartásból?
+</app-confirm>
 
-<div
-  *ngIf="errorText"
-  class="alert alert-danger d-flex align-items-center w-50 float-end"
-  role="alert"
->
-  <div class="mx-auto">
-    <p class="text-start m-0">⁉ {{ errorText }}</p>
-  </div>
+<div *ngIf="errorText" class="alert alert-danger" role="alert">
+  {{ errorText }}
   <button
     type="button"
-    class="btn-close float-end"
+    class="btn-close"
     data-bs-dismiss="modal"
-    (click)="(errorText)"
+    aria-label="Close"
+    (click)="errorText = ''"
   ></button>
 </div>

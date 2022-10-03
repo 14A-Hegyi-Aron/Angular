@@ -3,11 +3,11 @@ import { CarModel } from '../../models';
 import { CarService } from '../../services';
 
 @Component({
-  selector: 'app-car-list',
-  templateUrl: './car-list.component.html',
-  styleUrls: ['./car-list.component.css'],
+  selector: 'app-car-list2',
+  templateUrl: './car-list2.component.html',
+  styleUrls: ['./car-list2.component.css'],
 })
-export class CarListComponent implements OnInit {
+export class CarList2Component implements OnInit {
   cars: CarModel[] = [];
   newCarData: CarModel | null = null;
   carToDelete: CarModel | null = null;
